@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1696558103597,
+      "tag": "0000_smart_wilson_fisk",
+      "breakpoints": true
+    }
+  ]
+}

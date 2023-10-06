@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "drizzle-kit generate:pg",
+    "push": "drizzle-kit push:pg",
+    "db": "npm run generate && npm run push"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
