@@ -10,7 +10,24 @@ const schema = z.object({
   color: z.string().min(1)
 });
 
-const NotesPage = () => {
+const getNotes = async () => {
+  try {
+    const nts = await db.select().from(notes);
+
+    return nts;
+  } catch (error) {
+    throw new Error("Something went wrong when fetching notes!");
+  }
+};
+
+const colorVariants = {
+  blue: "bg-blue-200",
+  green: "bg-green-200",
+  purple: "bg-purple-200",
+  yellow: "bg-yellow-200"
+};
+
+const NotesPage = async () => {
   const createNote = async (formData: FormData) => {
     "use server";
 
@@ -41,6 +58,8 @@ const NotesPage = () => {
       };
     }
   };
+
+  const nts = await getNotes();
 
   return (
     <div>
@@ -103,6 +122,26 @@ const NotesPage = () => {
           Create Note
         </button>
       </form>
+
+      <div className="mt-4">
+        <h2 className="text-2xl">Notes</h2>
+
+        <ul className="grid gap-4 grid-cols-12">
+          {nts.length
+            ? nts.map((nt) => {
+                // @ts-ignore
+                const colorClasses = colorVariants[nt.color];
+
+                return (
+                  <li key={nt.id} className={`${colorClasses} col-span-2 p-4 rounded-lg`}>
+                    <h3 className="text-xl font-semibold mb-1">{nt.name}</h3>
+                    <p>{nt.content}</p>
+                  </li>
+                );
+              })
+            : null}
+        </ul>
+      </div>
     </div>
   );
 };
